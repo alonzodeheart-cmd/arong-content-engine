@@ -1,6 +1,6 @@
 ---
 name: arong-content-engine
-description: Turn a creator's confirmed personal thoughts or real experiences into an evidence-aware article, one 3–5 minute vertical video script, and a manual multi-platform publishing package. Use when the user asks to turn an idea into an article/video, find candidates from explicitly scoped personal materials, or continue a content-production workflow.
+description: Turn a creator's confirmed personal thoughts or real experiences into an evidence-aware article, one 3–5 minute vertical video script, and a manual multi-platform publishing package. Coordinate compatible specialist review skills for AI-writing checks, titles, hooks, covers, and script flow when they are installed. Use when the user asks to turn an idea into an article/video, find candidates from explicitly scoped personal materials, or continue a content-production workflow.
 ---
 
 # Arong Content Engine
@@ -42,6 +42,18 @@ Before drafting, determine the target reader, concrete problem, core conflict, p
 6. Run a logic-flow check and an AI-writing diagnostic on the video script. Diagnose first; revise only after the user agrees.
 7. Lock the approved script before generating audio, subtitles, video, or platform materials.
 
+## Specialist review adapters
+
+When compatible dbskill adapters are installed, use them as required checkpoints and keep their reports in the task folder:
+
+- After the first article draft, run `dbs-ai-check`; it diagnoses only and must not rewrite text without the user's approval.
+- For the independent title decision, run `dbs-xhs-title`.
+- For the independent first-five-second opening decision, run `dbs-hook`.
+- For the independent cover decision, run `dbs-cover`.
+- Before locking a video script, run `dbs-script-flow` and `dbs-ai-check`.
+
+If an adapter is unavailable, do not silently substitute it or claim that its check was completed. Mark that checkpoint unavailable, explain the gap, and continue only after the user accepts the limitation.
+
 ## Production and publishing
 
 - Use visuals that correspond to the sentence: evidence, data, process diagrams, authorized material, or relevant generated scenes. Do not fill the video with unrelated stock imagery or subtitle cards.
@@ -50,6 +62,6 @@ Before drafting, determine the target reader, concrete problem, core conflict, p
 - Adapt titles and descriptions per platform, but keep the core claim truthful. Keep the long-form body identical on platforms where the user requests it.
 - Never auto-publish. Stop at a manual publishing package.
 
-## Optional adapters
+## Other optional adapters
 
-If installed, title, hook, cover, AI-check, TTS, subtitle, and rendering tools may be used as adapters. If an adapter is unavailable, explain the gap and continue with the workflow portions that do not depend on it.
+TTS, subtitle alignment, rendering, and publishing mirrors remain optional. If unavailable, explain the gap and continue with the workflow portions that do not depend on them.
