@@ -1,0 +1,7 @@
+interface:
+  display_name: "Arong Content Engine"
+  short_description: "Turn verified ideas into articles, vertical videos and release packs"
+  default_prompt: "Use $arong-content-engine to turn my confirmed idea into an article and one 3–5 minute vertical video."
+
+policy:
+  allow_implicit_invocation: true
