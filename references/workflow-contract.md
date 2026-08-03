@@ -14,7 +14,7 @@ Each approval is real. Do not assume consent because an option looks best.
 2. Diagnose the reader, conflict, factual limits, and intended action.
 3. Co-write from real material; create a full draft only after the direction is confirmed.
 4. Preserve AI diagnostic reports. Only apply edits after the user agrees.
-5. After approval, create one WeChat-ready HTML version with `dbs-wechat-html` when available. It formats only; the Markdown remains the source of truth.
+5. After approval, create a WeChat-ready HTML version with `dbs-wechat-html` when available. If the user has not selected a style, generate the recommended style preview first and wait for a choice. It formats only; the Markdown remains the source of truth.
 6. End naturally. Do not add a generic lead-generation CTA unless the user explicitly asks.
 
 ## Video workflow
