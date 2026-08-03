@@ -33,7 +33,7 @@ Before drafting, determine the target reader, concrete problem, core conflict, p
 
 1. Draft the article only after the content direction is confirmed.
 2. Run an AI-writing diagnostic after the first draft. Keep the report and do not change the article unless the user approves a specific change.
-3. After the article is approved, run `dbs-wechat-html` when available to create a WeChat-ready HTML version. Use a user-specified style directly; otherwise generate the documented recommended style preview and wait for the user to select one. Format only and keep the Markdown source unchanged.
+3. After the article is approved, run `dbs-wechat-html` when available to create a WeChat-ready HTML version. Use the `minimal` style by default; change it only when the user explicitly requests another style. Format only and keep the Markdown source unchanged.
 4. After the article is approved, run title, opening, and cover as three independent decisions:
    - title candidates;
    - first-five-second opening candidates;
