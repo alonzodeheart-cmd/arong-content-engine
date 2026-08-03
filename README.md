@@ -7,6 +7,7 @@
 - 先确认选题和事实边界，再写正文；
 - AI 检测默认只诊断，修改必须经过用户确认；
 - 标题、开头、封面分别决定，不把它们强绑成一套方案。
+- 封面默认采用“主题背景压暗 + 2–4 行大字”；视频先做 20–30 秒 Motion-first 预览，通过后才渲染长片。
 
 ## 这是什么
 
@@ -44,8 +45,9 @@ npx -y skills add alonzodeheart-cmd/arong-content-engine -g --all
 4. 审阅：文章、视频稿均需用户确认；AI 检测先留报告再讨论修改。
 5. 公众号排版：文章确认后生成一份可粘贴 HTML；只改排版，不改 Markdown 正文。
 6. 独立决策：标题、开头、封面分别输出和确认，并分别调用对应专项检查。
-7. 制作：只生成一版 9:16、3–5 分钟长视频；本地 Markdown 是事实源。
-8. 发布：生成发布包，用户自行发布；之后基于真实数据复盘。
+7. 视觉预览：先生成大字封面和 20–30 秒动态测试片，检查 Anti-PPT 硬门。
+8. 制作：预览经用户确认后，只生成一版 9:16、3–5 分钟长视频；本地 Markdown 是事实源。
+9. 发布：生成发布包，用户自行发布；之后基于真实数据复盘。
 
 ## DB Skill 的整合方式
 
@@ -57,6 +59,8 @@ npx -y skills add alonzodeheart-cmd/arong-content-engine -g --all
 - `dbs-cover`：封面钩子和视觉方向；
 - `dbs-script-flow`：视频逐字稿的逻辑衔接检查。
 - `dbs-wechat-html`：文章确认后的微信公众号粘贴版 HTML；不改写正文。
+
+如果本机安装了 [`rn-motion-director`](https://github.com/Pluviobyte/rnskill/tree/main/skills/rn-motion-director)，可在视频阶段调用它做运动命题和 Anti-PPT 复核；没有安装时使用仓库内置的 [视觉生产契约](references/visual-production-contract.md)，不会假装已经调用外部 Skill。
 
 没有安装这些专项 Skill 时，核心流程仍可运行，但 Skill 会明确标记“该检查未执行”，不会假装已经完成。
 
