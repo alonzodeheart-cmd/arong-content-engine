@@ -33,14 +33,15 @@ Before drafting, determine the target reader, concrete problem, core conflict, p
 
 1. Draft the article only after the content direction is confirmed.
 2. Run an AI-writing diagnostic after the first draft. Keep the report and do not change the article unless the user approves a specific change.
-3. After the article is approved, run title, opening, and cover as three independent decisions:
+3. After the article is approved, run `dbs-wechat-html` when available to create one WeChat-ready HTML version. Choose a user-specified style or an article-purpose match; format only and keep the Markdown source unchanged.
+4. After the article is approved, run title, opening, and cover as three independent decisions:
    - title candidates;
    - first-five-second opening candidates;
    - cover hook and visual direction.
-4. Do not force the three decisions into an A/B/C bundle or infer one choice from another.
-5. Rewrite the approved article into a conversational 3–5 minute, 9:16 vertical video script and a relevant storyboard. Do not make horizontal duplicates or short cut-downs by default.
-6. Run a logic-flow check and an AI-writing diagnostic on the video script. Diagnose first; revise only after the user agrees.
-7. Lock the approved script before generating audio, subtitles, video, or platform materials.
+5. Do not force the three decisions into an A/B/C bundle or infer one choice from another.
+6. Rewrite the approved article into a conversational 3–5 minute, 9:16 vertical video script and a relevant storyboard. Do not make horizontal duplicates or short cut-downs by default.
+7. Run a logic-flow check and an AI-writing diagnostic on the video script. Diagnose first; revise only after the user agrees.
+8. Lock the approved script before generating audio, subtitles, video, or platform materials.
 
 ## Specialist review adapters
 
@@ -51,6 +52,7 @@ When compatible dbskill adapters are installed, use them as required checkpoints
 - For the independent first-five-second opening decision, run `dbs-hook`.
 - For the independent cover decision, run `dbs-cover`.
 - Before locking a video script, run `dbs-script-flow` and `dbs-ai-check`.
+- After an article is approved, run `dbs-wechat-html` to create a WeChat-ready HTML version without rewriting the Markdown source.
 
 If an adapter is unavailable, do not silently substitute it or claim that its check was completed. Mark that checkpoint unavailable, explain the gap, and continue only after the user accepts the limitation.
 
