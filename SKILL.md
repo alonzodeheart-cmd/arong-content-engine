@@ -62,7 +62,7 @@ If an adapter is unavailable, do not silently substitute it or claim that its ch
 ## Production and publishing
 
 - Use visuals that correspond to the sentence: evidence, data, process diagrams, authorized material, or relevant generated scenes. Do not fill the video with unrelated stock imagery or subtitle cards.
-- Covers default to a darkened topic-related full-frame background with a 6–14 Chinese-character hook set in 2–4 very large lines. Text is the first visual subject; thumbnail readability is the gate.
+- Covers default to a darkened topic-related full-frame background with a 6–14 Chinese-character hook set in 2–4 very large lines. Longer titles prefer three semantic lines. Use solid white Black/Heavy serif type and let the longest line occupy roughly 82%–88% of the canvas width. Text is the first visual subject; thumbnail readability is the gate.
 - Video is motion-first: each beat records a moving object and visible state change. At least 80% of beats must change beyond fade/slide; three repeated card layouts, long static scenes, asset-free `ai_scene`, or subtitle-only rotation are hard failures.
 - Do not render the complete 3–5 minute video until the user has reviewed the 20–30 second preview and representative frames.
 - Generate captions from the final audio, not estimated timing. Keep captions near 68% of frame height and within two lines where possible.

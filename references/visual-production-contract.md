@@ -3,9 +3,9 @@
 ## Text-first cover
 
 - Make the title, not the background, the first visual subject.
-- Use a 6–14 Chinese-character hook in 2–4 lines. Judge it at mobile-feed thumbnail size; do not impose an arbitrary maximum text area.
+- Use a 6–14 Chinese-character hook in 2–4 lines. Prefer three semantic lines for 9–14 characters, usually 2–5 characters per line, so one long line does not shrink the whole title. Judge it at mobile-feed thumbnail size; do not impose an arbitrary maximum text area.
 - Generate or select a topic-related full-frame background, then darken, desaturate, and soften it so it supports rather than competes with the title.
-- Use high-contrast white heavy serif or an approved personal typeface. Do not ask an image model to draw the final Chinese text.
+- Use solid white Black/Heavy serif or an approved personal typeface. Let the longest line occupy roughly 82%–88% of the canvas width, keep line spacing tight, and avoid a thin outline. Do not ask an image model to draw the final Chinese text.
 - Re-layout for each aspect ratio instead of mechanically cropping.
 - `dbs-cover` may audit the hook and platform ratios; this contract overrides generic visual-metaphor preferences unless the user asks for another style.
 
