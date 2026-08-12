@@ -68,7 +68,8 @@ function sha256(path) {
 }
 
 function commandExists(command) {
-  const result = spawnSync('where.exe', [command], {encoding: 'utf8'});
+  const lookup = process.platform === 'win32' ? 'where.exe' : 'which';
+  const result = spawnSync(lookup, [command], {encoding: 'utf8'});
   return result.status === 0;
 }
 
