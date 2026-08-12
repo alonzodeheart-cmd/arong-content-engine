@@ -1,10 +1,20 @@
 # Arong Content Engine
 
+[![CI](https://github.com/alonzodeheart-cmd/arong-content-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/alonzodeheart-cmd/arong-content-engine/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/alonzodeheart-cmd/arong-content-engine)](https://github.com/alonzodeheart-cmd/arong-content-engine/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> A reviewable and resumable content-production Skill for Codex and other `SKILL.md`-compatible agents. It turns verified creator knowledge into an article, one 3–5 minute vertical video, and a seven-platform publishing package without silently crossing human approval gates. [English documentation](docs/README.en.md)
+
 标题、开头、封面、AI 痕迹检查，单独调用都不难。难的是把它们接起来：文章改了，视频稿有没有同步？用户批准的是哪一版？配音跑了半小时，是仍在工作，还是已经卡住？
 
 Arong Content Engine 把这些分散环节整理成一条有审批门、可恢复的内容生产线。它从创作者已经确认的个人观点或真实经历出发，产出文章、一版 3–5 分钟 9:16 竖版长视频和七平台发布包。
 
 它不会替用户决定选题，不会把 AI 推导冒充本人经历，也不会自动发布。
+
+![长任务前台监工示意](docs/demo/monitor-heartbeat.svg)
+
+查看 [三分钟可复现案例](examples/portable-demo/README.md) 和 [实际 Remotion 渲染样片](docs/demo/arong-content-engine-demo.mp4)。
 
 ## 它解决什么
 

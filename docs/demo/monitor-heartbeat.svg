@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Arong Content Engine foreground supervisor</title>
+  <desc id="desc">A terminal-style diagram showing TTS, rendering, completion heartbeats, and the resumable state file.</desc>
+  <rect width="1200" height="560" rx="28" fill="#111318"/>
+  <circle cx="44" cy="42" r="9" fill="#ff5f57"/>
+  <circle cx="72" cy="42" r="9" fill="#febc2e"/>
+  <circle cx="100" cy="42" r="9" fill="#28c840"/>
+  <text x="140" y="49" fill="#8b949e" font-size="21" font-family="Consolas, Menlo, monospace">run-monitored — foreground supervisor</text>
+  <g font-family="Consolas, Menlo, monospace" font-size="24">
+    <text x="44" y="112" fill="#79c0ff">[arong-stage]</text><text x="250" y="112" fill="#f0f6fc">tts-generate</text>
+    <text x="44" y="164" fill="#56d364">[arong-heartbeat]</text><text x="285" y="164" fill="#c9d1d9">stage=tts-generate elapsed=45s health=active gpu=71%</text>
+    <text x="44" y="216" fill="#79c0ff">[arong-stage]</text><text x="250" y="216" fill="#f0f6fc">video-render</text>
+    <text x="44" y="268" fill="#56d364">[arong-heartbeat]</text><text x="285" y="268" fill="#c9d1d9">stage=video-render elapsed=180s health=active gpu=96%</text>
+    <text x="44" y="320" fill="#79c0ff">[arong-stage]</text><text x="250" y="320" fill="#f0f6fc">completed</text>
+    <text x="44" y="372" fill="#56d364">[arong-heartbeat]</text><text x="285" y="372" fill="#c9d1d9">stage=completed exit=0 health=finished</text>
+  </g>
+  <rect x="42" y="420" width="1116" height="94" rx="15" fill="#1d222b" stroke="#30363d"/>
+  <text x="68" y="458" fill="#d2a8ff" font-size="22" font-family="Consolas, Menlo, monospace">08-运行状态/long-task.json</text>
+  <text x="68" y="492" fill="#8b949e" font-size="20" font-family="Consolas, Menlo, monospace">stage · PID · heartbeat · GPU · exit code · recovery status</text>
+</svg>

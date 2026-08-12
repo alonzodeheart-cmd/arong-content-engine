@@ -1,0 +1,32 @@
+name: Feature request
+description: 提议一个可复用的流程改进
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Real workflow problem
+      description: 说明当前在哪一步遇到什么问题，不要只写希望增加某个工具。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: 说明输入、状态变化、审批边界和预期输出。
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Safety and scope
+      options:
+        - label: 该建议不会要求默认上传私人知识库、声音参考或账号凭据。
+          required: true
+        - label: 我说明了该功能是否会新增外部写入或自动发布行为。
+          required: true

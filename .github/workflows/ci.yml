@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Remotion runtime
+        run: npm ci --prefix runtime/remotion --no-audit --no-fund
+      - name: Prepare portable contract fixture
+        run: node scripts/prepare-ci-fixture.mjs
+      - name: Check JavaScript syntax
+        run: |
+          node --check scripts/engine.mjs
+          node --check scripts/profile.mjs
+          node --check scripts/supervise-run.mjs
+          node --check runtime/content-pipeline.mjs
+          node --check runtime/remotion/render.mjs
+      - name: Audit skill contracts
+        run: node scripts/engine.mjs audit-skill
+        env:
+          ARONG_CONTENT_PROFILE: ${{ github.workspace }}/.ci-fixture/profile.json
+      - name: Run portable render test
+        run: node scripts/engine.mjs self-test
+        env:
+          ARONG_CONTENT_PROFILE: ${{ github.workspace }}/.ci-fixture/profile.json
