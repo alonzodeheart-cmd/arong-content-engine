@@ -7,3 +7,11 @@ coverage/
 *.log
 outputs/
 content-tasks/
+config/profile.local.json
+config/tts-routing.local.json
+config/source-map.local.md
+runtime/remotion/public/runtime/
+runtime/remotion/node_modules/
+runtime/*-report.json
+__pycache__/
+*.pyc

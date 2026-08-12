@@ -1,60 +1,60 @@
-# Visual Production Contract
+# 视觉生产契约
 
-## Text-first cover
+## 目录
 
-- Make the title, not the background, the first visual subject.
-- Use a 6–14 Chinese-character hook in 2–4 lines. Prefer three semantic lines for 9–14 characters, usually 2–5 characters per line, so one long line does not shrink the whole title. Judge it at mobile-feed thumbnail size; do not impose an arbitrary maximum text area.
-- Generate or select a topic-related full-frame background, then darken, desaturate, and soften it so it supports rather than competes with the title.
-- Use solid white Black/Heavy serif or an approved personal typeface. Let the longest line occupy roughly 82%–88% of the canvas width, keep line spacing tight, and avoid a thin outline. Do not ask an image model to draw the final Chinese text.
-- Re-layout for each aspect ratio instead of mechanically cropping.
-- `dbs-cover` may audit the hook and platform ratios; this contract overrides generic visual-metaphor preferences unless the user asks for another style.
+1. 暗背景大字封面
+2. Motion-first 视频
+3. Anti-PPT 硬门
 
-The deterministic helper `scripts/render-text-first-cover.py` can place approved text over an existing text-free background.
+## 1. 暗背景大字封面
 
-## Motion-first video
+默认把标题而不是画面设为第一视觉主体。
 
-Before choosing a page layout, write one motion thesis:
+- 封面短钩子约 6–14 个汉字，优先 2–4 行；9–14 字标题优先按语义拆成 3 行，每行通常 2–5 字，避免单行 7 字以上把整体字号压小。只表达一个判断或疑问。
+- 不设置“文字不能占太多”的上限。以缩小到手机信息流尺寸后能否立即读完为验收标准。
+- 使用全幅主题背景。没有口播人物时，根据正文生成或选择相关场景；背景只负责提供氛围和识别度，不负责制造冲突。
+- 先判断背景原始亮度，再决定曝光方向。日间或高亮背景可降饱和、轻度模糊并增加暗色遮罩；明暗合适的背景保持不动；夜景、室内暗场和本身偏暗的背景禁止套用固定遮罩，若主体与关键物件在缩略图中不可辨，必须克制地提亮阴影与中间调，同时保留深黑、避免屏幕和白字过曝。
+- 默认使用纯白 Black/Heavy 字重的粗宋体/衬线中文或已经确认的个人字体；最长行约占画布宽度 82%–88%，行距紧凑，不加细描边。保持高对比，不叠加副标题、复杂边框、装饰图标和多层小字。
+- 标题放在中央安全区，可居中或轻微左对齐。平台比例变化时重新排版，不机械裁切。
+- 在 100% 和约 20% 缩略尺寸各检查一次；必须先读到标题，同时仍能辨认背景主体、场景和与主题有关的关键物件。若缩略图只剩白字和近似纯黑底，即使标题清楚也判定失败；先提亮无字母版，再重新叠字，禁止直接把带白字成品整体提亮。
 
-`This video proves <claim> by showing <core object> changing from <start state> to <end state>.`
+`dbs-cover` 负责钩子审计和平台比例，本合同覆盖其通用视觉隐喻偏好。若用户明确要求其他风格，以当次要求为准。
 
-Each beat records:
+可用 `scripts/render-text-first-cover.py` 把已生成的无字背景确定性排成大字封面。不要让图像模型生成最终中文字。
 
-- `narrative_job`
-- `main_moving_object`
-- `state_change`
-- `camera_motion`
-- `text_role`
-- `asset_need`
-- `motion_kind`
-- `ppt_risk`
+## 2. Motion-first 视频
 
-Default to 5–12 second beats. A beat longer than 15 seconds needs at least two visible state changes or must be split. Generated images must do narrative work and enter the motion system through crop, mask, depth, parallax, scan, or transformation.
+分镜先描述运动，再选择页面结构。先写一句运动命题：
 
-When `rn-motion-director` is installed, use it for the motion thesis, beat graph, and Anti-PPT review. Otherwise apply this bundled equivalent and never claim that the external skill ran.
+`本视频通过 <核心对象> 从 <开始状态> 变化为 <结束状态>，证明 <核心判断>。`
 
-## Anti-PPT hard gate
+每个节拍至少记录：
 
-Stop before full rendering if any condition is true:
+- `narrative_job`：钩子、揭示、对比、机制、证据、后果或收束；
+- `main_moving_object`：真正承载运动的对象；
+- `state_change`：对象在画面上发生什么可见变化；
+- `camera_motion`：推进、平移、视差、跟随、裁切或稳定；
+- `text_role`：标题、标签、字幕、数字或无；
+- `asset_need`：代码/SVG、截图、生成图、授权素材或无；
+- `motion_kind`：路径、分叉、时间线、对比、信号、网络、堆叠、扫描、遮罩或其他明确语法；
+- `ppt_risk`：这段最可能怎样退化成幻灯片。
 
-- the storyboard is mostly pages, cards, headings, and fades;
-- the same layout appears three times consecutively;
-- objects appear but never move, connect, split, transform, or produce a result;
-- an `ai_scene` has no actual asset;
-- a diagram has no `motion_kind` or `state_change`;
-- fewer than 80% of beats contain visible state change beyond fade/slide;
-- long text carries the visual information;
-- representative frames look like one repeated slide template.
+默认节拍持续 5–12 秒。超过 15 秒时，必须设计至少两次可见状态变化或拆分节拍。生成图片必须承担叙事工作，并通过遮罩、景深、视差、裁切、扫描或变形进入运动系统。
 
-Passing requires visible state change in at least 80% of beats, a visual system that continues through the video, and substantive motion even when components are reused.
+如果已安装 `rn-motion-director`，调用它产生运动命题、节拍图和 Anti-PPT 复核；未安装时使用本合同执行同等检查，并明确记录外部 Skill 未调用。
 
-## Low-cost preview gate
+## 3. Anti-PPT 硬门
 
-After script and storyboard approval, render only a 20–30 second 9:16 preview:
+出现以下任一情况即停止正式长片渲染：
 
-1. Choose 2–4 beats representing the hook, core mechanism, and one turn.
-2. Use real narration and exact captions.
-3. Export the MP4 and 3–5 representative frames.
-4. Review type size, semantic match, motion continuity, and thumbnail readability.
-5. Render the full 3–5 minute video only after the user approves the visual direction.
+- 分镜只是页面/卡片列表；
+- 多数节拍为标题、要点和淡入；
+- 同一版式连续出现三次；
+- 物体只出现，不移动、变形、连接、分叉或产生结果；
+- `ai_scene` 没有实际素材；
+- `diagram` 没有 `motion_kind` 与 `state_change`；
+- 少于 80% 的节拍具有淡入、平移以外的可见状态变化；
+- 依靠长段文字承担画面信息；
+- 抽帧图看起来像多张同模板幻灯片。
 
-Keep previews under `06-媒体成品/测试预览/`; do not place them in the publishing package.
+通过条件：至少 80% 的节拍具有可见状态变化；内容语义与画面一一对应，存在贯穿全片的视觉系统，同类组件复用但状态与运动发生实质变化。

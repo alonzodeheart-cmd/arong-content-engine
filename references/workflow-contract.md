@@ -1,38 +1,171 @@
-# Workflow Contract
+# 工作流契约
 
-## States
+## 目录
 
-Use a task folder with these logical states:
+1. 输入模式
+2. 两条内容线
+3. 状态与交付物
+4. 写作与审批
+5. 视频生产
+6. 长任务监工与恢复
+7. 复盘
 
-`idea → content diagnosis → co-writing → article review → article approved → independent title/opening/cover selections → video script review → script approved → visual preview review → rendered → publishing package → published → review`
+## 1. 输入模式
 
-Each approval is real. Do not assume consent because an option looks best.
+### A. 用户直接提供
 
-## Article workflow
+明确选题后，以 `topic-origin=user_provided` 创建任务。把用户原话写入 `01-访谈原话.md`，把来源和时间写入 `00-选题与来源.md`。不要先润色再保存。
 
-1. Record the original topic and evidence.
-2. Diagnose the reader, conflict, factual limits, and intended action.
-3. Co-write from real material; create a full draft only after the direction is confirmed.
-4. Preserve AI diagnostic reports. Only apply edits after the user agrees.
-5. After approval, create a WeChat-ready HTML version with `dbs-wechat-html` when available. Use `minimal` by default; use another style only when the user explicitly requests it. It formats only; the Markdown remains the source of truth.
-6. End naturally. Do not add a generic lead-generation CTA unless the user explicitly asks.
+### B. 用户要求寻找
 
-## Video workflow
+完整遵守 `topic-selection-contract.md`。默认只读，不把搜索结果注册、移动或合并进知识库，也不在候选阶段创建内容任务。
 
-- Rewrite rather than read the article aloud.
-- Aim for one 9:16 vertical video of 3–5 minutes.
-- Follow `visual-production-contract.md`: write the motion thesis and state changes before choosing layouts.
-- Render only a 20–30 second preview and representative frames first. Full rendering requires explicit visual approval.
-- Use short spoken sentences and introduce a new fact, evidence, turn, or method roughly every 20–40 seconds.
-- Stop when the Anti-PPT gate fails: repeated cards, long static scenes, missing assets, subtitle-only rotation, or visible state change below 80%.
-- Validate exact audio, subtitles, frame size, duration, and the presence of an audio stream before calling the render finished.
+按领域选事实源，不声明一个“全局最新文件夹”：
 
-## Independent input contract
+1. 当前任务和当前项目目录；
+2. Trae 的 `X思考合集.md`：思想时间线；
+3. Obsidian：个人资料、学习材料和长期笔记；
+4. 已有公众号文章、飞书文章与内容任务；
+5. 用户明确要求时再扩大到其他磁盘或联网搜索。
 
-Title, opening, and cover are different decisions. Record each selection independently and allow the user to revise one without changing the other two.
+返回 3–7 个候选。用户明确选定后，以 `topic-origin=library_selected` 和可追溯的 `topic-evidence` 创建任务。
 
-The default cover is text-first: 6–14 Chinese characters in 2–4 large lines over a darkened topic-related background. Thumbnail readability, not a maximum text-area percentage, is the approval criterion.
+### C. 既有文章
 
-## Publish and review
+用 `--source` 初始化。既有文章是本地事实源，不因视频化而改写原文；视频稿另存。
 
-Publishing stays manual. Capture original platform data at 24 hours, 7 days, and 30 days. Treat any lesson from one post as a candidate pattern, not a universal rule.
+## 2. 两条内容线
+
+### `thought`
+
+用于社会议题、商业思想、个人经历和观点型 IP 内容。默认交付：
+
+- 完整文章；
+- 标题候选、开头候选和封面设计三条独立工序；
+- 一版 3–5 分钟、9:16 的竖版长视频；
+- 各视频平台复用同一无水印视频的发布包；
+- 默认不做小红书卡片，除非存在清晰框架、比较、清单或步骤。
+
+### `project_sop`
+
+用于真实项目经历、项目拆解、SOP、工具教程，以及包含项目、商品或服务推广、招募、导流、价格、收益、合作或成交目的的内容。默认交付：
+
+- 完整文章/SOP；
+- 标题候选、开头候选和封面设计三条独立工序；
+- 一版 3–5 分钟、9:16 的竖版长视频；
+- 4–6 张小红书图文卡片；
+- 真实证据优先的封面和全平台发布包。
+
+收益数字必须有截图或记录支持；“案例收益”不能写成“所有人都能获得”。
+
+## 3. 状态与交付物
+
+| 状态 | 核心工作 | 推进者 |
+| --- | --- | --- |
+| `idea` | 登记问题、来源、受众 | Agent |
+| `content_diagnosis` | 只问尚未确定的大方向，确定受众、冲突、产品关系、形式和证据边界 | 用户 + Agent |
+| `co_writing` | Agent 先出骨架和段落；只为关键经历、证据、立场或大方向提问 | 用户 + Agent |
+| `article_review` | 交付完整文章 | 用户审批 |
+| `article_approved` | 文章哈希锁定 | 流水线 |
+| `hook_selected` | 标题、开头和封面方向均由用户单独确认 | 用户审批 |
+| `script_review` | 竖版长视频文案和分镜完成 | 用户审批 |
+| `script_approved` | 文案哈希锁定；开始运动分镜与完整生产 | 流水线 |
+| `rendered` | 配音、字幕、封面和视频完成 | 自动 |
+| `package_ready` | 七平台发布包完成 | 自动 |
+| `published` | 用户人工发布并登记 | 用户 |
+| `metrics_24h/7d/30d` | 导入真实平台数据 | 用户 + Agent |
+| `reviewed` | 形成候选规律 | 用户确认 |
+
+不得用“用户应该会同意”代替审批记录。文章或视频文案批准后如发生文字变化，哈希失效，必须重新确认。
+
+## 4. 写作与审批
+
+### 内容诊断与共同写作
+
+- 选题确认后先填写 `00-内容诊断.md`。这个文件不是文章草稿，先判断：谁会看、他遇到什么具体问题、核心冲突、与产品/IP 的真实关系、适合的形式、可用证据和不能说的边界。
+- 内容方向没有用户明确确认前，不得生成完整文章。
+- 诊断只问尚未确认的大方向；前一回答、个人思考库或已有材料已覆盖的，不重复询问。
+- 诊断确认后，Agent 先基于已有材料给出文章骨架和段落任务。只在缺少关键经历、可核验证据、立场选择或必须由用户决定的大方向时再问；不得让用户按段落供稿。
+- 连续 2–4 个有效回答后，Agent 必须主动输出提纲、段落草稿或结构调整，让用户批评与纠偏。
+- 共同收集“发生了什么、为什么重要、具体细节、证据、代价/限制、反例、希望读者得到什么”，并在用户确认骨架和关键段落后整合为文章。
+- 不用 AI 用泛泛的段落填补用户还没说清楚的部分；宁可保留待确认，也不交付假完整文章。
+- 首稿完成后使用 `dbs-ai-check` 做一次编辑审查。默认只输出检测与修改建议；只有用户明确同意具体修改后，才改正文。检查结果、修改记录和执行复核必须保留；任何情况下都不改本人经历、事实边界、立场或需要本人裁决的措辞。
+
+### 文章
+
+- 开头先给冲突、反常识事实或具体经历，不从空泛时代背景起笔。
+- 把抽象观点落到真实细节。
+- 保留不确定性，不伪造人物、平台规则、收益或时间。
+- 文章结尾自然收束，不硬接商品广告。
+
+### 标题、开头与封面
+
+文章批准后，不生成 A/B/C 联动套餐。标题、开头和封面分别调用各自的 Skill 并分别呈现：
+
+1. `dbs-xhs-title`：标题候选池。每个标题必须给出公式编号、原始爆款举例和适用理由；用户单独选择。
+2. `dbs-hook`：先给当前开头诊断，再给前五秒候选池；用户单独选择。
+3. `dbs-cover`：读取已批准文章及已选标题/开头，完成钩子预审、视觉方向、平台预设和封面生成/迭代；用户单独反馈。
+
+三项不共享 A/B/C 编号，不从其中任一项自动推断另两项。只有各自确认后才汇总进入视频文案与分镜。
+
+封面生成同时遵守 `visual-production-contract.md`。默认使用暗背景大字：标题是第一视觉主体，背景只提供主题氛围。用户最新明确反馈覆盖 `dbs-cover` 的通用视觉偏好。
+
+### 公众号排版
+
+- 文章批准后调用 `dbs-wechat-html`，固定使用 `minimal` 极简黑白；只有用户明确要求其他风格时才切换。
+- 排版只改变呈现，不改写文章 Markdown、观点或事实边界。
+- 正式 HTML 必须遵守微信粘贴兼容性：可见元素使用行内样式，不依赖 `<style>`、class、脚本、外部资源或父容器继承。
+- 输出放在 `07-发布包/01-微信公众号/`；用户在公众号后台粘贴并手机预览后再人工发布。
+
+### 视频稿
+
+- 主稿目标 3–5 分钟，使用口语短句。
+- 不是逐段照读文章；删除只适合阅读的过渡。
+- 每 20–40 秒出现一次新信息、证据、转折或方法。
+- 只生产这一版竖版长视频文案，不派生横版或短切片。
+- 在批准前使用 dbs-script-flow、dbs-ai-check 或同等检查；默认只诊断，用户允许后再改。
+- 视频文案完成后判断内容性质：`thought` 思想型内容不强制调用发布风险审查；`project_sop` 一律调用 `dbs-content-risk-check`。即使登记为 `thought`，只要实际包含项目介绍、商品或服务推广、招募、导流、价格、收益、合作或成交目的，也必须调用。
+- 把未经改写的审查结果保存为 `05-视频文案/发布风险审查.md`。审查默认只诊断；先让用户看到具体风险和最小修改动作，得到用户确认后才能改稿。修改后如文字发生变化，重新执行审查并重新确认视频文案哈希。
+- 对必须审查的内容，缺少 `发布风险审查.md` 时不得执行 `approve-script`、配音或长片渲染。内容性质明确时不重复询问；确实无法判断商业目的时最多追问一次。
+
+## 5. 视频生产
+
+默认传统 Remotion 视频。数字人不进入主流程，除非用户以后单独要求重新比较并批准。
+
+顺序：
+
+1. 锁定视频文案；
+2. 按 `visual-production-contract.md` 写运动命题和节拍图；真实截图/证据 → 数据或流程 → 相关图解/AI 场景；
+3. 使用固定本人音色生成最终 PCM WAV；
+4. 从最终 WAV 生成词级字幕；
+5. 直接渲染唯一一版 1080×1920、9:16 的 3–5 分钟竖版长视频；
+6. 解码、尺寸、时长、字幕、声音清晰度与 Anti-PPT 检查；
+7. 所有视频平台复用同一无水印视频并制作差异化标题、简介和封面发布包。
+
+配音稿按相邻完整句合并成约 120–160 字的段落，避免几十个短句重复触发模型推理。显卡可用显存低于路由配置阈值时立即报告 `GPU is busy`，保留当前任务并等待后重试，不允许同时启动第二个 IndexTTS2 生产任务争抢显存。
+
+不使用与段落无关的学生、办公室、钞票、豪车等模板素材填充。
+
+不得把分镜说明直接塞进通用卡片。至少 80% 的节拍必须包含淡入/平移以外的可见状态变化；同一版式不得连续出现三次；`ai_scene` 必须有实际素材；超过 15 秒的节拍必须含两次状态变化或拆分。抽帧看起来像同模板幻灯片时停止长片渲染。
+
+## 6. 长任务监工与恢复
+
+- 配音、字幕、渲染和打包统一从 `run-monitored` 进入。监工进程保持前台、转发日志并至少每 60 秒输出一次心跳。
+- `run-safe` 仅供监工脚本作为子进程调用，不得由 Agent 后台启动后结束当前对话。
+- `08-运行状态/long-task.json` 是运行状态事实源，记录阶段、PID、启动时间、最后输出、心跳、退出码和恢复建议；完整输出追加到 `08-运行状态/run-safe.log`。
+- 连接中断、宿主重启或用户询问时，先运行 `monitor-status`。进程仍存活就继续观察；进程已消失但状态仍为 `running` 时标为 `stale`，检查产物和日志后从失败阶段恢复。
+- 三次心跳没有新日志只触发检查，不触发自动重启。检测到相同任务已有存活进程时拒绝重复运行。
+
+## 7. 复盘
+
+保留平台原始截图。没有的数据写 `null`，不反推、不猜测。
+
+分别登记 24 小时、7 天、30 天：
+
+- 曝光/播放；
+- 点击或完播；
+- 点赞、收藏、评论、分享；
+- 关注、私信或新增微信（若平台能确认）；
+- 成交（仅有真实记录时）。
+
+单个题目的结果只能形成“候选规律”。同一规律跨至少两个题目重复出现且经用户确认后，才升级为全局规则。

@@ -1,7 +1,7 @@
 interface:
-  display_name: "Arong Content Engine"
-  short_description: "Turn verified ideas into articles, vertical videos and release packs"
-  default_prompt: "Use $arong-content-engine to turn my confirmed idea into an article and one 3–5 minute vertical video."
+  display_name: "阿荣内容生产引擎"
+  short_description: "有审批门、前台监工与断点恢复的文章视频生产线"
+  default_prompt: "使用 $arong-content-engine：如果我给了选题就进入内容诊断；如果我让你找选题，只读搜索我的个人思考库，先给有来源证据的候选并等我选择。文章、标题、开头、封面和视频稿分别确认后，用前台监工制作唯一一版 9:16 竖版长视频和七平台发布包。"
 
 policy:
   allow_implicit_invocation: true

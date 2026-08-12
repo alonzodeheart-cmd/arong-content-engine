@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "local_video": {
+    "provider": "indextts2-local",
+    "voice_id": "YOUR_LOCAL_VOICE_ID",
+    "model": "IndexTTS2 2.0",
+    "repository": "D:/AI-Models/IndexTTS2/index-tts",
+    "model_dir": "D:/AI-Models/IndexTTS2/index-tts/checkpoints",
+    "device": "cuda",
+    "inference_precision": "fp16",
+    "minimum_free_gpu_mb": 3800,
+    "reference_wav": "REQUIRED_ABSOLUTE_LOSSLESS_WAV",
+    "reference_sha256": "REQUIRED_SHA256",
+    "default_delivery": {
+      "playback_speed": 1.0,
+      "emotion_vector": [0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+      "emotion_weight": 0.45,
+      "integrated_loudness_lufs": -16,
+      "output_sample_rate": 24000,
+      "output_channels": 1,
+      "output_codec": "pcm_s16le"
+    }
+  }
+}

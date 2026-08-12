@@ -1,75 +1,151 @@
 ---
 name: arong-content-engine
-description: Turn a creator's confirmed personal thoughts or real experiences into an evidence-aware article, one 3–5 minute vertical video script, and a manual multi-platform publishing package. Coordinate compatible specialist review skills for AI-writing checks, titles, hooks, covers, and script flow when they are installed. Use when the user asks to turn an idea into an article/video, find candidates from explicitly scoped personal materials, or continue a content-production workflow.
+description: 阿荣个人多平台内容生产引擎。先接收用户给定的选题，或只读搜索阿荣的个人思考库并提交候选、等待用户选定；选题确认后先做内容诊断，再以一次一问、多轮共创的方式沉淀文章，随后分别调用标题、开头和封面 Skill，制作传统视频文案、本人音色配音、唯一一版 9:16 竖版长视频、平台封面、公众号 HTML、小红书卡片、七平台发布包和数据复盘。用户说“把这个想法做成文章和视频”“从我的思想里找选题”“推荐选题”“做全平台内容”“继续内容流水线”“启动阿荣内容引擎”时使用。
 ---
 
-# Arong Content Engine
+# 阿荣内容生产引擎
 
-Treat content production as a recoverable workflow. Local Markdown is the source of truth; every approval and generated asset should remain traceable to a task folder.
+把内容生产视为可恢复的状态机。案例是输入，任务目录里的本地 Markdown、审批哈希和生成清单是事实源。
 
-## Start correctly
+## 首次进入
 
-1. Read [workflow-contract.md](references/workflow-contract.md).
-2. Read [permissions-and-evidence.md](references/permissions-and-evidence.md).
-3. When the workflow reaches cover or video production, read [visual-production-contract.md](references/visual-production-contract.md).
-4. If the user asks to search personal materials, read their private source map first. Do not assume any disk path or search the whole computer.
-5. If the user gives a clear topic, register it as user-provided. Do not replace it with a more viral but different topic.
+1. 完整读取 `references/topic-selection-contract.md`。
+2. 完整读取 `references/workflow-contract.md`。
+3. 完整读取 `references/permissions-and-evidence.md`。
+4. 读取 `config/profile.local.json` 指向的私人来源地图；如果不存在，先复制 `config/profile.example.json` 完成初始化，不得猜测个人路径。
+5. 到封面或视频制作阶段时，完整读取 `references/visual-production-contract.md`。
+6. 运行：
 
-## Topic gate
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" doctor
+```
 
-- For a supplied topic: preserve its core question and record the user's original wording.
-- For a request to find topics: return 3–7 candidates with source evidence, a target reader, a conflict, and an evidence label. Wait for the user to choose before creating a task or drafting.
-- Search is read-only by default. It never authorizes ingesting or reorganizing source files.
+7. `doctor` 返回 `FULL` 时可执行完整视频流程；返回 `WRITING_ONLY` 时只能推进写作，必须明确报告缺少的本地视频依赖。
+8. 已有任务时再运行 `status --task <任务目录>`，从现状继续，不重新创建。
+9. 到联动方案、视觉或发布阶段时读取 `references/platform-contract.md`。
 
-## Co-write instead of interrogating
+## 选题门
 
-Before drafting, determine the target reader, concrete problem, core conflict, product relationship, form, and evidence boundary.
+- 用户直接给出明确选题：原样登记题意，使用 `--topic-origin user_provided` 创建任务。
+- 用户要求找选题：按 `topic-selection-contract.md` 只读搜索个人思考库，返回 3–7 个有原句和路径证据的候选。可以标出首选，但不得替用户选定、不得创建任务、不得开始写文章。
+- 用户从候选中明确选定后：使用 `--topic-origin library_selected --topic-evidence "<来源路径、日期或候选编号>"` 创建任务。
+- “我推荐一个并开始写”不等于用户选定。候选输出与正式创建必须分成两次交互，除非用户在搜索前已明确授权“自动采用排名第一”。
 
-- Ask at most one question when a missing answer would change the structure, factual boundary, or the user's stance.
-- After 2–4 useful answers, advance with a structure or draft for critique. Do not make the user provide every paragraph.
-- Separate `[本人原话]`, `[外部材料]`, `[AI整理]`, and `[待确认]` in task records.
-- Do not invent experiences, figures, guarantees, or platform rules.
+## 判断入口
 
-## Review and approval
+- 用户直接给思想、经历或项目素材：先判断是否已构成明确选题；明确时登记为 `user_provided`，不明确时只问一个决定方向的问题。
+- 用户让你寻找思想：按 `topic-selection-contract.md` 搜索，先列候选和证据，等待用户选择。
+- 用户给既有文章：把文章作为本地事实源初始化，跳过不必要的访谈，但仍保留文章、联动方案和视频文案审批。
+- 用户说“继续”：读取最近明确指定的任务。不得凭目录修改时间猜测唯一权威版本。
 
-1. Draft the article only after the content direction is confirmed.
-2. Run an AI-writing diagnostic after the first draft. Keep the report and do not change the article unless the user approves a specific change.
-3. After the article is approved, run `dbs-wechat-html` when available to create a WeChat-ready HTML version. Use the `minimal` style by default; change it only when the user explicitly requests another style. Format only and keep the Markdown source unchanged.
-4. After the article is approved, run title, opening, and cover as three independent decisions:
-   - title candidates;
-   - first-five-second opening candidates;
-   - cover hook and visual direction.
-5. Do not force the three decisions into an A/B/C bundle or infer one choice from another.
-6. Rewrite the approved article into a conversational 3–5 minute, 9:16 vertical video script and a relevant storyboard. Do not make horizontal duplicates or short cut-downs by default.
-7. Run a logic-flow check and an AI-writing diagnostic on the video script. Diagnose first; revise only after the user agrees.
-8. Lock the approved script before generating audio, subtitles, video, or platform materials.
-9. Write a motion thesis and beat graph, then render only a 20–30 second preview with real narration and captions. Wait for visual approval before rendering the full video.
+## 创建或恢复任务
 
-## Specialist review adapters
+创建：
 
-When compatible dbskill adapters are installed, use them as required checkpoints and keep their reports in the task folder:
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" new `
+  --title "<标题>" --slug "<english-slug>" --lane "<thought|project_sop>" `
+  --topic-origin "<user_provided|library_selected>" `
+  --topic-evidence "<思考库选题时必填>" `
+  --source "<可选 Markdown 绝对路径>"
+```
 
-- After the first article draft, run `dbs-ai-check`; it diagnoses only and must not rewrite text without the user's approval.
-- For the independent title decision, run `dbs-xhs-title`.
-- For the independent first-five-second opening decision, run `dbs-hook`.
-- For the independent cover decision, run `dbs-cover`.
-- When `rn-motion-director` is installed, use it for the motion thesis, beat graph, and Anti-PPT review. Otherwise use the bundled visual contract and state that the external skill was not called.
-- Before locking a video script, run `dbs-script-flow` and `dbs-ai-check`.
-- After an article is approved, run `dbs-wechat-html` to create a WeChat-ready HTML version without rewriting the Markdown source.
+恢复：
 
-If an adapter is unavailable, do not silently substitute it or claim that its check was completed. Mark that checkpoint unavailable, explain the gap, and continue only after the user accepts the limitation.
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" status `
+  --task "<任务目录或 task_id>"
+```
 
-## Production and publishing
+只执行状态返回的 `next_action`。不要越过审批门。
 
-- Use visuals that correspond to the sentence: evidence, data, process diagrams, authorized material, or relevant generated scenes. Do not fill the video with unrelated stock imagery or subtitle cards.
-- Covers default to a darkened topic-related full-frame background with a 6–14 Chinese-character hook set in 2–4 very large lines. Longer titles prefer three semantic lines. Use solid white Black/Heavy serif type and let the longest line occupy roughly 82%–88% of the canvas width. Text is the first visual subject; thumbnail readability is the gate.
-- Video is motion-first: each beat records a moving object and visible state change. At least 80% of beats must change beyond fade/slide; three repeated card layouts, long static scenes, asset-free `ai_scene`, or subtitle-only rotation are hard failures.
-- Do not render the complete 3–5 minute video until the user has reviewed the 20–30 second preview and representative frames.
-- Generate captions from the final audio, not estimated timing. Keep captions near 68% of frame height and within two lines where possible.
-- Generate one 1080×1920 vertical video, 3–5 minutes long, unless the user changes the format.
-- Adapt titles and descriptions per platform, but keep the core claim truthful. Keep the long-form body identical on platforms where the user requests it.
-- Never auto-publish. Stop at a manual publishing package.
+## 生产规则
 
-## Other optional adapters
+1. 选题确认后，先建立 `00-内容诊断.md`，不直接交付完整文章。诊断要回答：受众是谁、他正在面对的具体问题、文章真正的冲突或认知落差、与现有产品/IP 的真实关系、最适合的内容形式和证据边界。
+2. 诊断阶段采用关键问题制，而不是逐句采访。只在受众/核心冲突/行动落点/产品关系/形式这些大方向尚未明确时提问；已经有答案的原话必须直接使用，不得重复问。
+3. 用户明确确认内容方向后，进入共同写作。Agent 先基于已有材料独立给出文章骨架和段落任务，再只为四类缺口提问：关键经历、可核验证据、立场选择、必须由用户决定的大方向。不得让用户逐句提供文章内容，也不得因为素材暂时不足而生成一篇看似完整的低质量文章。
+4. 每轮最多提出一个真正影响骨架或事实边界的问题；连续 2–4 个有效回答后，必须由 Agent 先推进为提纲、段落草稿或结构调整，交给用户批评，而不是继续拆分追问。
+5. 保留用户措辞，不编造经历、数据或立场；把本人原话、外部材料、AI整理和待确认内容区分记录。
+6. 当材料和段落逻辑都由用户确认后，才整合为完整文章并进入文章审阅。首稿完成后，使用 dbs-ai-check 做一次编辑审查，保留检测记录；只有用户明确同意具体修改后，才动正文。
+7. 文章批准后，调用 `dbs-wechat-html` 生成一份可粘贴到微信公众号后台的 HTML。固定使用 `minimal` 极简黑白；只有用户明确要求其他风格时才切换。只做排版，不改写 Markdown 正文。输出放入 `07-发布包/01-微信公众号/`，本地 Markdown 仍是事实源。
+8. 不得用 A/B/C 套餐把标题、开头和封面强行绑定，必须拆成三道独立工序：
+   - **标题**：调用 `dbs-xhs-title`，集中输出有公式编号的标题候选与推荐；用户单独选择标题。
+   - **开头**：调用 `dbs-hook`，先保留开头诊断，再集中输出前 5 秒候选；用户单独选择开头。
+   - **封面**：调用 `dbs-cover` 完成钩子审计和平台版式，再按 `visual-production-contract.md` 的“暗背景大字”合同制作；标题是第一视觉主体，背景只提供主题氛围。用户单独反馈或确认，用户选定后才生成视觉。封面不可从标题/开头候选编号中自动推断。
+   标题、开头、封面可分别被用户否决或重做；只在它们各自确认后，再汇总为视频生产输入。
+9. 文章转视频不是摘要：以用户单独选定的标题、开头和封面方向为约束，重写成适合口播的 3–5 分钟主稿；不额外制作横版或短切片。同时定稿 `04-平台文章/platform-copy.json`，按平台写标题和简介，登记 B 站搜索关键词，并把 `reviewed` 设为 `true`。
+10. 视频文案完成后先判断内容性质。`thought` 思想型内容不因题材本身强制审查；`project_sop` 以及任何包含项目介绍、商品或服务推广、招募、导流、价格、收益、合作或成交目的的内容，必须调用 `dbs-content-risk-check`，把原始诊断保存为 `05-视频文案/发布风险审查.md`。审查默认只诊断、不改稿；向用户展示具体问题和最小修改动作，只有用户确认修改或明确接受剩余风险后，才能批准视频文案并进入配音和渲染。内容性质已经明确时不得重复询问；无法判断是否含商业目的时最多追问一次。
+11. 视频文案经用户批准后，先按 `visual-production-contract.md` 写运动命题和节拍图；如已安装 `rn-motion-director`，必须调用并保留结果，否则执行本 Skill 内置的同等 Motion-first/Anti-PPT 检查，不得假装已调用外部 Skill。
+12. 视频文案、运动分镜和封面方向均获用户批准后，运行 `run-monitored`，直接生成唯一一版正式长片。正式渲染的硬门只有已确认的视频文案、运动分镜、封面方向和适用的发布风险处置。
+13. 视觉动效以稳定阅读为优先：禁止全画面持续“呼吸缩放”、反复放大缩小、循环弹跳，以及因全局帧取模导致同一场景重复入场。主体默认保持稳定；必要动效只承担一次信息变化或场景切换，字幕不得缩放或弹跳。
+14. 本地 Markdown 始终是正文事实源；飞书只作为审阅镜像，必须先生成差异。
+15. 不自动发布。完成发布包后停在人工发布步骤。
 
-TTS, subtitle alignment, rendering, and publishing mirrors remain optional. If unavailable, explain the gap and continue with the workflow portions that do not depend on them.
+## 长任务前台监工协议
+
+配音、字幕、Remotion 渲染和发布包属于长任务，必须遵守以下规则：
+
+1. 对外只运行 `run-monitored`；`run-safe` 是监工脚本内部调用的子命令，不得用 `Start-Process`、后台作业、`nohup` 或脱离当前会话的方式启动。
+2. 监工脚本持续转发真实日志，并按心跳输出当前阶段、已运行时间、静默时长、子进程 PID 和 GPU 状态。单次心跳间隔不得超过 60 秒。
+3. 当前任务处于 `running` 时不得结束对话或声称任务完成。宿主必须保持前台等待；若宿主连接中断，恢复后先运行 `monitor-status`，根据状态文件续接，不要重新启动相同任务。
+4. 连续三个心跳没有新日志时，状态标记为 `quiet_check_required`，先检查进程、GPU 和日志；不得仅因安静就自动杀死或重启。
+5. 发现同一任务已有存活的监工或生产进程时，拒绝重复启动，尤其禁止同时运行第二个 IndexTTS2 任务争抢显存。
+6. 只有 `completed`、`failed`、`waiting` 或确认后的 `stale` 才是可以交还控制权的终态。失败时保留任务目录和状态文件，从失败阶段恢复。
+
+可恢复状态固定写入：
+
+- `08-运行状态/long-task.json`：阶段、PID、心跳、退出码和可恢复状态；
+- `08-运行状态/run-safe.log`：完整生产日志。
+
+## 自动执行
+
+在文章、标题、开头、封面方向和视频文案均已获得真实用户批准后，直接运行完整生产：
+
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" run-monitored `
+  --task "<任务目录>" --heartbeat 45
+```
+
+先试运行时追加 `--dry-run`。遇到失败，修复当前阶段后从同一任务恢复，不重建任务。
+
+连接恢复或用户询问进度时运行：
+
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" monitor-status `
+  --task "<任务目录>"
+```
+
+## 质量审查
+
+- 文章：事实边界清楚；本人原话、外部材料、AI 整理和待确认内容可区分。
+- 标题与开头：兑现正文，不制造虚假收益或无关冲突。
+- 视频：画面必须对应当段内容；优先真实截图、证据、流程、数据和相关图解，禁止随机库存图。至少 80% 的节拍出现淡入/平移以外的可见状态变化；重复卡片、长时间静止、无素材 `ai_scene` 和纯字幕轮播直接判定失败。
+- 发布风险：思想型内容按需审查；项目/SOP 与商业推广内容必须存在 `05-视频文案/发布风险审查.md`，且风险处置已经由用户确认，才允许进入生产。
+- 配音：只用用户在 `config/profile.local.json` 和本机 TTS route 中确认的本地 IndexTTS2 音色、倍速和固定参考；禁止云端或系统音色回退。
+- 字幕：从最终 WAV 对齐；位于画面高度约 68%，最多两行。
+- 封面：默认暗背景大字；短钩子约 6–14 字、2–4 行，较长标题优先按语义拆成 3 行。使用纯白 Black/Heavy 粗宋体，最长行约占画布宽度 82%–88%，文字是第一视觉主体。先检查原图亮度：高亮背景可压暗，明暗合适则不动；夜景或本身偏暗的背景不得再次重度压暗，主体不可辨时必须先提亮无字母版的阴影与中间调，再重新叠字。缩到手机信息流尺寸后既要先读完标题，也必须辨认出背景主体与主题场景；只剩白字和纯黑底视为失败。按平台重新排版，不机械裁切；同尺寸且用途相同的封面可复用。
+- 结尾：自然结束，不添加“关注、私信、加微信、领取资料”等通用 CTA。
+- 发布：公众号与知乎正文一致；其他平台按 `platform-contract.md` 适配。
+
+## 验证
+
+结构与权限审计：
+
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" audit-skill
+```
+
+使用内置案例和真实单竖版长视频引擎进行自检：
+
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" self-test
+```
+
+交付前对当前案例运行：
+
+```powershell
+node "<当前 Skill 目录>/scripts/engine.mjs" verify-case `
+  --task "<任务目录>"
+```
+
+只有检查结果为 `PASS` 才能称为本阶段成功；`WAITING_USER` 是真实审批门，不是失败，也不得伪装成完成。

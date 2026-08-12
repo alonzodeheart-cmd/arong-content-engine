@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "portable-thought-to-vertical-video",
+  "prompt": "把这个真实经历做成文章和一条竖版长视频。",
+  "expected_lane": "thought",
+  "expected_stages": [
+    "topic_selection_gate",
+    "content_diagnosis",
+    "co_writing",
+    "article_review_gate",
+    "title_hook_cover_gates",
+    "script_approval_gate",
+    "single_9x16_long_video",
+    "manual_publish"
+  ],
+  "forbidden": [
+    "auto_publish",
+    "random_stock_footage",
+    "generic_follow_cta",
+    "cloud_tts_fallback",
+    "silent_user_approval",
+    "silent_topic_selection"
+  ],
+  "engine_fixture": "runtime/remotion/test-fixture/render-config.json"
+}

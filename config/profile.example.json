@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "creator_name": "YOUR_NAME",
+  "content_root": "C:/path/to/your/content-system",
+  "tasks_root": "C:/path/to/your/content-tasks",
+  "source_map": "C:/path/to/your/private/source-map.local.md",
+  "specialist_skills": [
+    "dbs-ai-check",
+    "dbs-xhs-title",
+    "dbs-hook",
+    "dbs-cover",
+    "dbs-script-flow",
+    "dbs-content-risk-check",
+    "dbs-wechat-html",
+    "rn-motion-director"
+  ],
+  "tts": {
+    "voice_id": "YOUR_LOCAL_VOICE_ID",
+    "playback_speed": 1.12,
+    "route_config": "C:/path/to/tts-routing.local.json",
+    "python": "C:/path/to/IndexTTS2/.venv/Scripts/python.exe",
+    "pronunciation_lexicon": "C:/path/to/pronunciation-lexicon.json",
+    "alignment_script": "C:/path/to/align_narration_timeline.py"
+  }
+}

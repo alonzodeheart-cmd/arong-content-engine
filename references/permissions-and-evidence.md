@@ -1,26 +1,59 @@
-# Permissions and Evidence
+# 权限与证据边界
 
-## Safe autonomous work
+## 可自主执行
 
-After the user starts this Skill, it may read the current task and explicitly scoped sources; create reversible task artifacts; generate drafts, diagnostics, scripts, storyboards, and tests; and verify media or file structure.
+用户启动本 Skill 后，以下动作属于已授权的正常实施步骤：
 
-## Decisions that require the user
+- 读取当前任务、用户明确指定的素材和本 Skill 的配置；
+- 在约定范围内只读搜索本地知识文件；
+- 创建或修改当前内容任务目录、内容诊断和共同写作记录；
+- 生成文章草稿、方案、视频稿、分镜、封面、卡片、配音、字幕、视频和发布包；
+- 执行格式、哈希、媒体、字幕、TTS 和平台规则验证；
+- 写入可逆历史、测试报告和数据导入结果；
+- 修复测试发现的局部问题并重试。
 
-- Selecting one topic from searched candidates.
-- Confirming the content direction, final article, final video script, and each title/opening/cover selection.
-- Merging or overwriting a cloud document.
-- Publishing, sending messages, purchasing, running ads, charging money, or using paid generation services.
-- Deleting or bulk-moving original user material.
+不要因为每个机械步骤重复询问权限。
 
-## Evidence labels
+## 必须等待用户
 
-- `[本人原话]`: directly supplied by the user.
-- `[外部材料]`: an external source, screenshot, article, or platform page.
-- `[AI整理]`: structure, summaries, or deductions created by AI.
-- `[待确认]`: uncertain, conflicted, or time-sensitive material.
+- 搜索候选存在实质方向差异，需要用户选择题目；
+- 从个人思考库返回候选后，必须等待用户明确选定；候选阶段不得创建任务或开写文章；
+- 内容诊断完成后，必须等待用户明确确认方向，才可从诊断进入共同写作并整合文章；
+- 批准文章；
+- 从三套联动方案中选择一套；
+- 批准最终竖版长视频文案；
+- 飞书差异合并或覆盖；
+- 对外发布、发送消息、收费、购买、投放或使用付费数字人；
+- 删除原始资料、批量移动知识库或扩大到未指定的敏感目录。
 
-Do not relabel external material or AI deductions as a user's own experience.
+“允许所有权限”代表对当前本地 Skill 建设和安全实施的最大授权，不代表可以冒充用户完成内容判断、对外发布或不可逆操作。
 
-## Search and privacy
+自动化整链路自检可以使用 `automated_selftest` 作为审批执行者，但任务必须同时满足 `test_mode=true` 与 `publishable=false`。这类记录只证明程序能跑通，不代表用户批准了内容，也不能转成可发布任务。
 
-Searching is read-only. Keep projects isolated unless the user asks to cross-reference them. Do not commit private notes, absolute local paths, credentials, account data, voice references, or private screenshots into a public repository.
+## 搜索不等于收录
+
+“帮我找”“全电脑搜”“看看有没有”默认是只读审计。只有用户明确说“整理进系统”“加入知识库”“合并”时，才创建派生索引或收录文件。
+
+不同项目保持独立。只有当前请求或选题需要时才跨项目搜索，并在来源登记中写明跨项目引用。
+
+## 四类证据标签
+
+- `[本人原话]`：用户直接说过或写过，保留原意。
+- `[外部材料]`：文章、推文、平台页面、书籍、截图或他人观点。
+- `[AI整理]`：结构、概括、改写、标题和推导。
+- `[待确认]`：无法确认、发生冲突或可能过时的内容。
+
+不得把外部材料改写后标成本人思想；不得把 AI 推导写成用户经历。
+
+## 时效与联网
+
+平台规则、产品能力、价格、法律和近期数据可能变化。需要这些事实时必须查询当前官方来源；技术问题优先官方文档和原始仓库。
+
+用户只要求使用个人素材时，不要为了“补充权威感”擅自联网。
+
+## 失败处理
+
+- 任何命令成功都要由文件、哈希或媒体探测结果验证。
+- 失败时保留原任务，从当前状态修复，不复制出多个“最终版”。
+- 不删除用户原稿和旧成品；新版本进入历史目录并可回退。
+- 只有检查为 `PASS` 才称该阶段完成；需要用户决定时返回 `WAITING_USER`。

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "阿荣内容任务 manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "title",
+    "slug",
+    "lane",
+    "workflow_state",
+    "source",
+    "approvals",
+    "outputs"
+  ],
+  "properties": {
+    "schema_version": {"const": 2},
+    "task_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "lane": {"enum": ["thought", "project_sop"]},
+    "workflow_state": {
+      "enum": [
+        "idea",
+        "interviewing",
+        "article_review",
+        "article_approved",
+        "hook_selected",
+        "script_review",
+        "script_approved",
+        "rendered",
+        "package_ready",
+        "published",
+        "metrics_24h",
+        "metrics_7d",
+        "metrics_30d",
+        "reviewed"
+      ]
+    },
+    "source": {"type": "object"},
+    "approvals": {"type": "object"},
+    "outputs": {"type": "object"}
+  },
+  "additionalProperties": true
+}

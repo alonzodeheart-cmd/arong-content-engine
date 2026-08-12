@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "title": "传统视频引擎自检",
+  "lane": "project_sop",
+  "duration": 3,
+  "audio": "test.wav",
+  "scenes": [
+    {
+      "start": 0,
+      "end": 1.5,
+      "type": "data",
+      "text": "真实证据、数据、流程",
+      "asset": null,
+      "source": "本地自检",
+      "values": [
+        {"label": "横版", "value": "16:9"},
+        {"label": "竖版", "value": "9:16"}
+      ]
+    },
+    {
+      "start": 1.5,
+      "end": 3,
+      "type": "process",
+      "text": "文案 → 配音 → 字幕 → 渲染",
+      "asset": null,
+      "source": null,
+      "steps": ["文案", "配音", "字幕", "渲染"]
+    }
+  ],
+  "captions": [
+    {"start": 0, "end": 1.5, "text": "传统视频引擎自检"},
+    {"start": 1.5, "end": 3, "text": "字幕固定在画面高度的百分之六十八"}
+  ]
+}

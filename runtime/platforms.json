@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "platforms": {
+    "wechat": {
+      "label": "微信公众号",
+      "kind": "article",
+      "body_group": "longform",
+      "title_group": "longform",
+      "html_style": {
+        "thought": "minimal",
+        "project_sop": "minimal"
+      },
+      "cover_refs": ["wechat-header.jpg", "wechat-share.jpg"]
+    },
+    "zhihu": {
+      "label": "知乎",
+      "kind": "article",
+      "body_group": "longform",
+      "title_group": "longform",
+      "cover_refs": ["cover-16x9.jpg"]
+    },
+    "xiaohongshu_graphic": {
+      "label": "小红书图文",
+      "kind": "graphic",
+      "title_max_chars": 20,
+      "cover_refs": ["cover-3x4.jpg"],
+      "default_enabled": {
+        "thought": false,
+        "project_sop": true
+      },
+      "card_count": {
+        "thought": [0, 6],
+        "project_sop": [4, 6]
+      }
+    },
+    "xiaohongshu_video": {
+      "label": "小红书视频",
+      "kind": "video",
+      "title_max_chars": 20,
+      "media_ref": "main-9x16.mp4",
+      "cover_ref": "first_frame"
+    },
+    "douyin": {
+      "label": "抖音",
+      "kind": "video",
+      "media_ref": "main-9x16.mp4",
+      "cover_ref": "first_frame"
+    },
+    "channels": {
+      "label": "视频号",
+      "kind": "video",
+      "media_ref": "main-9x16.mp4",
+      "cover_ref": "first_frame"
+    },
+    "bilibili": {
+      "label": "哔哩哔哩",
+      "kind": "video",
+      "title_mode": "search",
+      "media_ref": "main-9x16.mp4",
+      "cover_refs": ["cover-16x9.jpg"]
+    }
+  },
+  "shared_media": {
+    "main_vertical": "main-9x16.mp4"
+  },
+  "unique_covers": {
+    "cover-3x4.jpg": {
+      "width": 1080,
+      "height": 1440,
+      "consumers": ["xiaohongshu_graphic", "douyin", "channels"]
+    },
+    "cover-16x9.jpg": {
+      "width": 1920,
+      "height": 1080,
+      "consumers": ["bilibili", "zhihu", "channels"]
+    },
+    "wechat-header.jpg": {
+      "width": 900,
+      "height": 383,
+      "consumers": ["wechat"]
+    },
+    "wechat-share.jpg": {
+      "width": 500,
+      "height": 500,
+      "consumers": ["wechat"]
+    }
+  }
+}
