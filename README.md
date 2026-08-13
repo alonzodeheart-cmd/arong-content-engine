@@ -4,37 +4,19 @@
 [![Release](https://img.shields.io/github/v/release/alonzodeheart-cmd/arong-content-engine)](https://github.com/alonzodeheart-cmd/arong-content-engine/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> 把 dbskill 中分散的标题、开头、封面、AI 痕迹和视频稿检查，接入一条可确认、可恢复的内容生产流程。
+dbskill 能检查标题、开头、封面和 AI 痕迹，但它不会告诉你，这些 Skill 应该按什么顺序调用。
+
+更麻烦的是版本。
+
+文章改了一句话，之前确认的标题还算数吗？封面用的是新标题还是旧标题？视频稿交给 AI 检查以后，正文是不是又被改过？
+
+我做 Arong Content Engine，就是为了管这些事。
+
+它把选题、文章、标题、开头、封面、公众号排版、视频稿、配音和渲染接成一条流程。每一步使用哪个版本、调用哪个专项 Skill、什么时候必须等用户确认，都会留下记录。
+
+最后得到的不只是一次生成结果，而是一套能够继续、检查和恢复的内容任务。
 
 [English documentation](docs/README.en.md)
-
-## 为什么做这个 Skill
-
-dbskill 已经提供了很多专项能力：
-
-- 检查文章有没有明显的 AI 写作痕迹；
-- 生成和筛选标题；
-- 诊断短视频开头；
-- 设计不同平台的封面；
-- 检查视频逐字稿是否顺畅；
-- 排版微信公众号文章；
-- 检查商业内容的发布风险。
-
-这些能力单独使用没有问题。
-
-真正开始做一篇内容时，麻烦出现在另一层：
-
-- 文章改过以后，AI 痕迹检查还是不是针对最新版？
-- 标题已经选定，后面修改正文时要不要重新确认？
-- 文章开头和视频开头是否被混成了同一个东西？
-- 封面用的是哪个标题版本？
-- 视频稿到底是根据已确认文章改写，还是根据旧草稿生成？
-- 用户批准过哪些内容，哪些还只是 Agent 的建议？
-- 配音或视频渲染中断后，应该继续原任务还是重新开始？
-
-Arong Content Engine 解决的就是这一层问题。
-
-它不是另一个标题生成器，也不是对 dbskill 的重新实现。它是一条内容生产主流程：在正确的阶段调用正确的专项 Skill，保存每一步的结果和状态，并在需要用户决定的地方停下来。
 
 ## 它如何整合 dbskill
 
